@@ -6,21 +6,31 @@ chrome.runtime.onInstalled.addListener(function () {
   });
 });
 
-chrome.contextMenus.onClicked.addListener(function (info, tab) {
-  if (info.menuItemId === "generatePassword" && info.editable === true) {
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId === "generatePassword") {
     var newPassword = GeneratePassword();
-    var activeElement = document.activeElement;
+
+		chrome.scripting.executeScript({
+			target: {tabId: tab.id},
+			func: insertPassword,
+			args: [newPassword]
+		});
+  }
+});
+
+function insertPassword(password) {
+	  var activeElement = document.activeElement;
     if (
       activeElement &&
       (activeElement.type === "password" ||
         activeElement.getAttribute("type") === "password")
     ) {
-      activeElement.value = newPassword;
+      activeElement.value = password;
       activeElement.dispatchEvent(new Event("input", { bubbles: true }));
       activeElement.dispatchEvent(new Event("change", { bubbles: true }));
     }
-  }
-});
+
+}
 
 function GeneratePassword() {
   let pw = "";
