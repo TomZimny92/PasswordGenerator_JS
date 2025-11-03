@@ -2,7 +2,7 @@ chrome.runtime.onInstalled.addListener(function () {
   chrome.contextMenus.create({
     id: "generatePassword",
     title: "Generate Password",
-    contexts: ["password"],
+    contexts: ["editable"],
   });
 });
 
