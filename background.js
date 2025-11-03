@@ -1,6 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var clipboardy_1 = import("clipboardy");
 chrome.runtime.onInstalled.addListener(function () {
   chrome.contextMenus.create({
     id: "generatePassword",
@@ -8,6 +5,7 @@ chrome.runtime.onInstalled.addListener(function () {
     contexts: ["password"],
   });
 });
+
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
   if (info.menuItemId === "generatePassword" && info.editable === true) {
     var newPassword = GeneratePassword();
@@ -23,14 +21,14 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
     }
   }
 });
+
 function GeneratePassword() {
-  var pw = "";
-  var min = 33;
-  var max = 126;
-  for (var i = 0; i < 16; i++) {
-    var c = Math.floor(Math.random() * (max - min)) + min;
+  let pw = "";
+  let min = 33;
+  let max = 126;
+  for (let i = 0; i < 16; i++) {
+    let c = Math.floor(Math.random() * (max - min)) + min;
     pw += String.fromCharCode(c);
   }
-  clipboardy_1.default.write(pw);
   return pw;
 }

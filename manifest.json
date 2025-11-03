@@ -13,6 +13,6 @@
 		"scripting"
 	],
 	"background": {
-		"service_worker": "index.js"
+	"service_worker": "background.js"
 	}
 }
