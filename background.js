@@ -10,11 +10,16 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === "generatePassword") {
     var newPassword = GeneratePassword();
 
+		if (tab.url && !tab.url.startsWith("chrome://")){
 		chrome.scripting.executeScript({
 			target: {tabId: tab.id},
 			func: insertPassword,
 			args: [newPassword]
 		});
+		}
+		else {
+			console.log("Cannot execute 'Generate Password' on a chrome:// URL");
+		}
   }
 });
 
